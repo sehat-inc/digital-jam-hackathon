@@ -1,7 +1,6 @@
 """
 Author: Hamza Amin
 Description: Extract text and tables from PDF files using PyMuPDF and pdfplumber
-Date: 2025-30-01
 
 """
 
