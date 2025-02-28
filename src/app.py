@@ -74,7 +74,6 @@ def index():
     contracts = response.data
     return render_template('index.html', contracts=contracts)
 
-
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'contract' not in request.files:
@@ -153,6 +152,7 @@ def upload_file():
         return "Invalid file type. Please upload a PDF.", 400
 
 
+
 @app.route('/highlight_pdf/<int:id>', methods=['GET', 'POST'])
 def highlight_pdf(id):
     # Fetch contract details from Supabase
@@ -204,4 +204,76 @@ def highlight_pdf(id):
 
     # **If GET request, just display the contract instead of redirecting infinitely**
     return render_template('contract.html', contract=contract)
+
+
+
+@app.route('/highlighted_pdf/<int:id>')
+def view_highlighted_pdf(id):
+    # Fetch contract details from Supabase
+    response = supabase.table('Contract').select('*').eq('id', id).execute()
+    if not response.data:
+        return "Contract not found", 404
+    
+    contract = response.data[0]
+    
+    # Get public URL for highlighted PDF
+    filename = contract['highlight_pdf'].split('/')[-1]
+    contract['highlight_pdf_url'] = supabase.storage.from_(BUCKET_NAME).get_public_url(filename)
+    
+    return render_template('highlight_pdf.html', contract=contract)
+
+@app.route('/contract/<int:id>')
+def view_contract(id):
+    # Fetch contract details from Supabase
+    response = supabase.table('Contract').select('*').eq('id', id).execute()
+    if not response.data:
+        return "Contract not found", 404
+    
+    contract = response.data[0]
+    
+    # Get public URL correctly
+    # Remove any full URLs or double slashes from the filename
+    filename = contract['contract_pdf'].split('/')[-1]
+    contract['pdf_url'] = supabase.storage.from_(BUCKET_NAME).get_public_url(filename)
+    
+    return render_template('contract.html', contract=contract)
+
+
+@app.route('/download/<int:contract_id>')
+def download_contract(contract_id):
+    try:
+        # Fetch contract details from Supabase
+        response = supabase.table('Contract').select('*').eq('id', contract_id).execute()
+        if not response.data:
+            return "Contract not found", 404
+        
+        contract = response.data[0]
+        
+        # Create a temporary file
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
+        
+        # Download the file data
+        data = supabase.storage.from_(BUCKET_NAME).download(contract['contract_pdf'])
+        
+        # Write to temporary file
+        with open(temp_file.name, 'wb') as f:
+            f.write(data)
+        
+        return send_file(
+            temp_file.name,
+            mimetype='application/pdf',
+            as_attachment=True,
+            download_name=os.path.basename(contract['contract_pdf'])
+        )
+    except Exception as e:
+        print(f"Error downloading contract: {str(e)}")
+        return f"Error downloading contract: {str(e)}", 500
+    finally:
+        # Cleanup temp file
+        if 'temp_file' in locals() and os.path.exists(temp_file.name):
+            os.unlink(temp_file.name)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
