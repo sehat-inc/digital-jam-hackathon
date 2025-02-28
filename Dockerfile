@@ -1,19 +1,30 @@
-# Use the official Python 3.8 slim image as the base image
-FROM python:3.8-slim
+# Use an official Python image
+FROM python:3.10
 
-# Set the working directory within the container
+# Set the working directory
 WORKDIR /api-flask
 
-# Copy the necessary files and directories into the container
-COPY src/ /api-flask/src/
-COPY rag/ /api-flask/rag/
-COPY .env /api-flask/
+# Copy requirements file
+COPY requirements.txt /api-flask/requirements.txt
 
-# Upgrade pip and install Python dependencies
-RUN pip3 install --upgrade pip && pip install --no-cache-dir -r /api-flask/src/requirements.txt
+# Install system dependencies (including Rust and Cargo)
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    gcc \
+    libssl-dev \
+    libffi-dev \
+    rustc \
+    && rm -rf /var/lib/apt/lists/*
 
-# Expose port 5000 for the Flask application
+# Upgrade pip and install dependencies
+RUN pip install --upgrade pip && pip install --no-cache-dir -r /api-flask/requirements.txt
+
+# Copy project files
+COPY . /api-flask/
+
+# Expose port for Flask
 EXPOSE 5000
 
-# Define the command to run the Flask application using Gunicorn
-CMD ["gunicorn", "src.app:app", "-b", "0.0.0.0:5000", "-w", "4"]
+# Command to run the application
+CMD ["python", "app.py"]

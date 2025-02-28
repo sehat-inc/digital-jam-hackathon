@@ -1,147 +1,106 @@
-aiohappyeyeballs             2.4.6
-aiohttp                      3.11.13
-aiosignal                    1.3.2
-annotated-types              0.7.0
-anyio                        4.8.0
-attrs                        25.1.0
-blinker                      1.9.0
-cachetools                   5.5.2
-certifi                      2025.1.31
-cffi                         1.17.1
-charset-normalizer           3.4.1
-click                        8.1.8
-colorama                     0.4.6
-cryptography                 44.0.1
-deprecation                  2.1.0
-filelock                     3.17.0
-Flask                        3.1.0
-frozenlist                   1.5.0
-fsspec                       2025.2.0
-google-ai-generativelanguage 0.6.15
-google-api-core              2.24.1
-google-api-python-client     2.161.0
-google-auth                  2.38.0
-google-auth-httplib2         0.2.0
-google-generativeai          0.8.4
-googleapis-common-protos     1.68.0
-gotrue                       2.11.4
-grpcio                       1.70.0
-grpcio-status                1.70.0
-h11                          0.14.0
-h2                           4.2.0
-hpack                        4.1.0
-httpcore                     1.0.7
-httplib2                     0.22.0
-httpx                        0.28.1
-huggingface-hub              0.29.1
-hyperframe                   6.1.0
-idna                         3.10
-itsdangerous                 2.2.0
-Jinja2                       3.1.5
-joblib                       1.4.2
-MarkupSafe                   3.0.2
-mpmath                       1.3.0
-multidict                    6.1.0
-networkx                     3.4.2
-nltk                         3.9.1
-numpy                        2.2.3
-packaging                    24.2
-pandas                       2.2.3
-pdfminer.six                 20231228
-pdfplumber                   0.11.5
-pillow                       11.1.0
-pip                          24.0
-postgrest                    0.19.3
-propcache                    0.3.0
-proto-plus                   1.26.0
-protobuf                     5.29.3
-pyasn1                       0.6.1
-pyasn1_modules               0.4.1
-pycparser                    2.22
-pydantic                     2.10.6
-pydantic_core                2.27.2
-PyMuPDF                      1.25.3
-pyparsing                    3.2.1
-pypdfium2                    4.30.1
-pytesseract                  0.3.13
-python-dateutil              2.9.0.post0
-python-dotenv                1.0.1
-pytz                         2025.1
-PyYAML                       6.0.2
-realtime                     2.4.0
-regex                        2024.11.6
-requests                     2.32.3
-rsa                          4.9
-safetensors                  0.5.2
-scikit-learn                 1.6.1
-scipy                        1.15.2
-sentence-transformers        3.4.1
-setuptools                   75.8.0
-six                          1.17.0
-sniffio                      1.3.1
-storage3                     0.11.3
-storage3                     0.11.3
-storage3                     0.11.3
-StrEnum                      0.4.15
-supabase                     2.13.0
-supafunc                     0.9.3
-sympy                        1.13.1
-threadpoolctl                3.5.0
-tokenizers                   0.21.0
-torch                        2.6.0
-tqdm                         4.67.1
-transformers                 4.49.0
-storage3                     0.11.3
-StrEnum                      0.4.15
-supabase                     2.13.0
-supafunc                     0.9.3
-sympy                        1.13.1
-threadpoolctl                3.5.0
-tokenizers                   0.21.0
-torch                        2.6.0
-tqdm                         4.67.1
-transformers                 4.49.0
-storage3                     0.11.3
-StrEnum                      0.4.15
-supabase                     2.13.0
-supafunc                     0.9.3
-sympy                        1.13.1
-threadpoolctl                3.5.0
-tokenizers                   0.21.0
-torch                        2.6.0
-tqdm                         4.67.1
-transformers                 4.49.0
-storage3                     0.11.3
-StrEnum                      0.4.15
-supabase                     2.13.0
-supafunc                     0.9.3
-sympy                        1.13.1
-threadpoolctl                3.5.0
-StrEnum                      0.4.15
-supabase                     2.13.0
-supafunc                     0.9.3
-sympy                        1.13.1
-threadpoolctl                3.5.0
-supafunc                     0.9.3
-sympy                        1.13.1
-threadpoolctl                3.5.0
-sympy                        1.13.1
-threadpoolctl                3.5.0
-tokenizers                   0.21.0
-threadpoolctl                3.5.0
-tokenizers                   0.21.0
-torch                        2.6.0
-tokenizers                   0.21.0
-torch                        2.6.0
-tqdm                         4.67.1
-torch                        2.6.0
-tqdm                         4.67.1
-tqdm                         4.67.1
-transformers                 4.49.0
-typing_extensions            4.12.2
-tzdata                       2025.1
-uritemplate                  4.1.1
-urllib3                      2.3.0
-websockets                   14.2
-Werkzeug                     3.1.3
-yarl                         1.18.3
+aiohappyeyeballs
+aiohttp
+aiosignal
+annotated-types
+anyio
+astroid
+attrs
+blinker
+cachetools
+certifi
+cffi
+charset-normalizer
+click
+colorama
+cryptography
+deprecation
+dill
+filelock
+Flask
+frozenlist
+fsspec
+google-ai-generativelanguage
+google-api-core
+google-api-python-client
+google-auth
+google-auth-httplib2
+google-generativeai
+googleapis-common-protos
+gotrue
+grpcio
+grpcio-status
+h11
+h2
+hpack
+httpcore
+httplib2
+httpx
+huggingface-hub
+hyperframe
+idna
+isort
+itsdangerous
+Jinja2
+joblib
+MarkupSafe
+mccabe
+mpmath
+multidict
+networkx
+nltk
+numpy
+packaging
+pandas
+pdfminer.six
+pdfplumber
+pillow
+pinecone
+pinecone-plugin-interface
+platformdirs
+postgrest
+propcache
+proto-plus
+protobuf
+pyasn1
+pyasn1_modules
+pycparser
+pydantic
+pydantic_core
+pylint
+PyMuPDF
+pyparsing
+pypdfium2
+pytesseract
+python-dateutil
+python-dotenv
+pytz
+PyYAML
+realtime
+regex
+requests
+rsa
+safetensors
+scikit-learn
+scipy
+sentence-transformers
+setuptools
+six
+sniffio
+storage3
+StrEnum
+supabase
+supafunc
+sympy
+threadpoolctl
+tokenizers
+tomlkit
+torch
+tqdm
+transformers
+typing_extensions
+tzdata
+uritemplate
+urllib3
+websockets
+Werkzeug
+yarl
