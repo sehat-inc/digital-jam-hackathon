@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlighted PDF</title>
+</head>
+<body>
+    <embed src="{{ contract.highlight_pdf_url }}" type="application/pdf" width="100%" height="600px" />
+    <br>
+    <a href="{{ url_for('index') }}">Back to Index</a>
+</body>
+</html>

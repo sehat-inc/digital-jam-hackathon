@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Debug Info -->
+    <div class="alert alert-info">
+        <strong>Debug Info:</strong>
+        <p><b>Contract ID:</b> {{ contract.id }}</p>
+        <p><b>Created At:</b> {{ contract.created_at }}</p>
+        <p><b>PDF Filename:</b> {{ contract.contract_pdf }}</p>
+    </div>
+
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1>Contract Details</h1>
+            <p class="text-muted">Uploaded on: {{ contract.created_at|format_datetime }}</p>
+        </div>
+    </div>
+
+    <!-- Top Action Buttons -->
+    <div class="d-flex justify-content-between flex-wrap mb-4">
+        <!-- Chat with AI Button -->
+        <button class="btn btn-info chat-btn">
+            <i class="fas fa-comments"></i> Chat with AI
+        </button>
+
+        <!-- Highlight Key Terms Button -->
+        <form action="{{ url_for('highlight_pdf', id=contract.id) }}" method="post">
+            <textarea class="form-control" id="summary" name="summary" rows="3" required>{{ contract.contract_summary }}</textarea>
+            <button type="submit" class="btn btn-success">Highlight Key Terms</button>
+        </form>
+    </div>
+
+    <!-- Contract Summary (Dark Mode) -->
+    <div class="card mb-4">
+        <div class="card-body bg-dark text-white rounded">
+            <h5 class="card-title"><b>Contract Summary</b></h5>
+            <div class="contract-summary p-3" style="white-space: pre-line;">
+                {{ contract.contract_summary | replace(" **", " <b>") | replace("**", "</b>") | safe }}
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Actions -->
+    <div class="d-flex gap-2 mb-4">
+        <a href="{{ contract.pdf_url }}" target="_blank" class="btn btn-primary">
+            <i class="fas fa-file-pdf"></i> View Contract
+        </a>
+        <a href="{{ url_for('download_contract', contract_id=contract.id) }}" class="btn btn-secondary">
+            <i class="fas fa-download"></i> Download Contract
+        </a>
+    </div>
+
+    <!-- Display Highlighted PDF (If available) -->
+    {% if contract.highlight_pdf %}
+        <div class="mt-4">
+            <iframe src="{{ contract.highlight_pdf_url }}" width="100%" height="600px"></iframe>
+        </div>
+    {% endif %}
+
+    <!-- Floating Chat Button -->
+    <div class="position-fixed bottom-3 end-3">
+        <button class="btn btn-primary rounded-circle shadow-lg chat-btn" style="width: 60px; height: 60px;">
+            <i class="fas fa-comments"></i>
+        </button>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.chat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            alert("Chat feature coming soon!");
+        });
+    });
+</script>
+{% endblock %}

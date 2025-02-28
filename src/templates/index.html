@@ -1,0 +1,588 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    /* Dashboard Specific Styles */
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    
+    .greeting {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+    
+    .btn-scan {
+        background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        color: var(--primary-bg);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: var(--transition);
+        box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
+    }
+    
+    .btn-scan:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(45, 212, 191, 0.4);
+    }
+    
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    
+    .icon-contracts {
+        background: rgba(45, 212, 191, 0.2);
+        color: var(--primary-accent);
+    }
+    
+    .icon-analysis {
+        background: rgba(14, 165, 233, 0.2);
+        color: var(--secondary-accent);
+    }
+    
+    .icon-insights {
+        background: rgba(168, 85, 247, 0.2);
+        color: #A855F7;
+    }
+    
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+    
+    .content-section {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 1100px) {
+        .content-section {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .section-title i {
+        color: var(--primary-accent);
+    }
+    
+    .upload-container {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+    }
+    
+    .upload-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .upload-body {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .upload-box {
+        width: 100%;
+        border: 2px dashed rgba(45, 212, 191, 0.4);
+        border-radius: 10px;
+        padding: 2.5rem 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+        margin-bottom: 1.5rem;
+    }
+    
+    .upload-box:hover {
+        border-color: var(--primary-accent);
+        background: rgba(45, 212, 191, 0.1);
+    }
+    
+    .upload-icon {
+        font-size: 3rem;
+        color: var(--primary-accent);
+        margin-bottom: 1rem;
+    }
+    
+    .upload-text {
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+    }
+    
+    .upload-hint {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        opacity: 0.7;
+    }
+    
+    .input-title {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        transition: var(--transition);
+    }
+    
+    .input-title:focus {
+        outline: none;
+        border-color: var(--primary-accent);
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .btn-upload {
+        background: var(--primary-accent);
+        color: var(--primary-bg);
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        width: 100%;
+        transition: var(--transition);
+    }
+    
+    .btn-upload:hover {
+        background: #26b8a5;
+        transform: translateY(-2px);
+    }
+    
+    .insights-container {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        height: 100%;
+    }
+    
+    .insights-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .insights-body {
+        padding: 1.5rem;
+    }
+    
+    .insight-card {
+        padding: 1rem;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        margin-bottom: 1rem;
+        transition: var(--transition);
+    }
+    
+    .insight-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .insight-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary-accent);
+    }
+    
+    .insight-text {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+    
+    .recent-contracts {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .contracts-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .view-all {
+        color: var(--primary-accent);
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+    }
+    
+    .view-all:hover {
+        text-decoration: underline;
+    }
+    
+    .contracts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .contract-card {
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 1.8rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contract-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+}
+
+.contract-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.contract-title {
+    font-size: 1rem; 
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.contract-date {
+    font-size: 0.75rem; 
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.btn-view {
+    background: rgba(45, 212, 191, 0.15);
+    color: var(--primary-accent);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: var(--transition);
+}
+
+.btn-view i {
+    font-size: 1rem;
+}
+
+.btn-view:hover {
+    background: rgba(45, 212, 191, 0.25);
+    transform: translateY(-2px);
+}
+
+.contract-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.2rem;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.8rem;
+    border-radius: 8px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.stat-item i {
+    color: var(--primary-accent);
+}
+
+.contract-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.btn-action {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-view {
+    background: rgba(45, 212, 191, 0.15);
+    color: var(--primary-accent);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+}
+
+.btn-view:hover {
+    background: rgba(45, 212, 191, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-chat {
+    background: rgba(14, 165, 233, 0.15);
+    color: var(--secondary-accent);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.btn-chat:hover {
+    background: rgba(14, 165, 233, 0.25);
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<div class="header-section">
+    <div>
+        <div class="greeting">Welcome back, User!</div>
+        <h1 class="page-title">Contract Intelligence Dashboard</h1>
+    </div>
+    <a class="btn btn-scan" href="https://www.youtube.com" target="_blank">
+        <i class="fas fa-bolt"></i> 
+        Watch Demo
+    </a>
+</div>
+
+<!-- Stats Row -->
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-icon icon-contracts">
+            <i class="fas fa-file-contract"></i>
+        </div>
+        <div class="stat-value">{{ contracts|length }}</div>
+        <div class="stat-label">Total Contracts</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon icon-analysis">
+            <i class="fas fa-chart-bar"></i>
+        </div>
+        <div class="stat-value">{{ contracts|length * 5 }}</div>
+        <div class="stat-label">AI Analysis Points</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon icon-insights">
+            <i class="fas fa-lightbulb"></i>
+        </div>
+        <div class="stat-value">{{ contracts|length * 3 }}</div>
+        <div class="stat-label">Key Insights</div>
+    </div>
+</div>
+
+<!-- Main Content Sections -->
+<div class="content-section">
+    <!-- Upload Section -->
+    <div class="upload-container">
+        <div class="upload-header">
+            <h3 class="section-title">
+                <i class="fas fa-upload"></i>
+                Upload New Contract
+            </h3>
+        </div>
+        <div class="upload-body">
+            <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="w-100">
+                <input type="text" name="contract_title" placeholder="Enter Contract Title" class="input-title" required>
+                
+                <div class="upload-box">
+                    <input type="file" id="contract" name="contract" accept=".pdf" hidden required>
+                    <i class="fas fa-file-upload upload-icon"></i>
+                    <div class="upload-text">Drag & Drop or Click to Upload</div>
+                    <div class="upload-hint">Supported formats: PDF</div>
+                </div>
+                
+                <button type="submit" class="btn-upload">Upload & Analyze</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- AI Insights Section -->
+    <div class="insights-container">
+        <div class="insights-header">
+            <h3 class="section-title">
+                <i class="fas fa-lightbulb"></i>
+                AI Insights
+            </h3>
+        </div>
+        <div class="insights-body">
+            <div class="insight-card">
+                <div class="insight-title">Lease Term Risks</div>
+                <div class="insight-text">2 contracts have automatic renewal clauses that require action within 30 days.</div>
+            </div>
+            
+            <div class="insight-card">
+                <div class="insight-title">Payment Analysis</div>
+                <div class="insight-text">Average rent increases across your portfolio is 5.2% annually, higher than market average.</div>
+            </div>
+            
+            <div class="insight-card">
+                <div class="insight-title">Important Dates</div>
+                <div class="insight-text">3 contracts have upcoming dates requiring attention within the next 60 days.</div>
+            </div>
+            
+            <div class="insight-card">
+                <div class="insight-title">Suggested Action</div>
+                <div class="insight-text">Review maintenance clause in Office Lease 2023 - may have unfavorable terms.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Contracts Section -->
+<div class="recent-contracts">
+    <div class="contracts-header">
+        <h3 class="section-title">
+            <i class="fas fa-file-alt"></i>
+            Recent Contracts
+        </h3>
+        <a href="/contracts" class="view-all">View All</a>
+    </div>
+    
+    <div class="contracts-grid">
+        {% for contract in contracts %}
+        <div class="contract-card">
+            <h4 class="contract-title">{{ contract.title }}</h4>
+            <div class="contract-date">Uploaded on {{ contract.created_at|format_datetime }}</div>
+            <div class="contract-actions">
+                <a href="{{ url_for('view_contract', id=contract.id) }}" class="btn btn-action btn-view">
+                    <i class="fas fa-eye"></i> View Summary
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Make the upload box interactive
+    document.addEventListener('DOMContentLoaded', function() {
+        const uploadBox = document.querySelector('.upload-box');
+        const fileInput = document.getElementById('contract');
+        
+        if (uploadBox && fileInput) {
+            uploadBox.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files.length > 0) {
+                    const fileName = fileInput.files[0].name;
+                    const uploadText = document.querySelector('.upload-text');
+                    if (uploadText) {
+                        uploadText.textContent = `Selected: ${fileName}`;
+                    }
+                    uploadBox.style.borderColor = 'var(--primary-accent)';
+                    uploadBox.style.background = 'rgba(45, 212, 191, 0.1)';
+                }
+            });
+            
+            // Drag and drop functionality
+            uploadBox.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadBox.style.borderColor = 'var(--primary-accent)';
+                uploadBox.style.background = 'rgba(45, 212, 191, 0.2)';
+            });
+            
+            uploadBox.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadBox.style.borderColor = 'rgba(45, 212, 191, 0.4)';
+                uploadBox.style.background = 'transparent';
+            });
+            
+            uploadBox.addEventListener('drop', function(e) {
+                e.preventDefault();
+                if (e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    const fileName = fileInput.files[0].name;
+                    const uploadText = document.querySelector('.upload-text');
+                    if (uploadText) {
+                        uploadText.textContent = `Selected: ${fileName}`;
+                    }
+                    uploadBox.style.borderColor = 'var(--primary-accent)';
+                    uploadBox.style.background = 'rgba(45, 212, 191, 0.1)';
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
