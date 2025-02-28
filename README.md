@@ -17,7 +17,47 @@ The RAG architecture is built without the use of external libraries/frameworks f
 
 > For a comprehensive overview, please visit [the offical Covenant AI Documentation](https://sehat-inc.github.io/covenant-ai/) 
 
+
+## Features
+
+### Frontend (HTML/CSS/JavaScript)
+- Contract Upload: Users can upload lease contracts in PDF or DOCX format.
+- Summary & Insights: Provides an AI-generated summary of key terms.
+- Highlight PDF: Highlights the important clauses and obligations in the pdf.
+- Interactive Chatbot: Allows users to ask AI-driven questions about the contract.
+
+### Backend (Flask Framework)
+- Document Processing: Extracts and parses text from uploaded documents using OCR.
+- NLP Analysis: Uses AI models to analyze legal language.
+- Database Management: Stores analyzed contracts in the supabase.
+- Dynamic ground rules: Update rules and regulations that must be present in agreement. 
+
+### AI Components
+1. Summarization: Summarize the uploaded agreements with LLM.
+2. Compare agreements: Compare 2 agreements and see which one is better.
+3. ChatBot: RAG based chatbot that helps understand jargons.
+4. Multiple contracts: Upload multiple PDFs and can chat with any of them.
+
+## Technologies Used
+- Frontend: HTML, CSS, JavaScript
+- Backend: Flask Framework, SupaBase
+- AI & NLP: SpaCy, Transformers (BERT/GPT), OCR for text extraction
+- Cloud & APIs: AWS S3 for file storage, FastAPI for AI models
+
+
 ## 📜 Get Started
+
+
+### **Prerequisites**
+- Python 3.x
+- SupaBase
+- Flask framework
+- NLTK, Sentence Transformers
+- HTML, CSS, JS
+
+
+### Installing requirements
+`pip install -r requirements.txt`
 
 ### Installing Tesseract
 Below are platform-specific instructions:
@@ -38,10 +78,12 @@ Below are platform-specific instructions:
 After installation, verify with:  
 `tesseract --version`
 
-## 🌱 Contributing to Covenant AI
 
-### Naming Conventions
-- **Lower Case/Pascal Case** for folder names. `numberofdonuts`/`NumberOfDonuts`
-- **Camel Case** for file names. `numberOfDonuts`
-- **Snake Case** for variable names. `number_of_donuts`
-- **Pascal Case/Lower Case** for function names. `NumberOfDonuts`/`numberofdonuts`
+## Running project
+**root/src**:
+                  ` python app.py`
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+For inquiries, contact u2022378@giki.edu.pk
