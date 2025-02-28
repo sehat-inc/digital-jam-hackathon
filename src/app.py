@@ -152,3 +152,56 @@ def upload_file():
     else:
         return "Invalid file type. Please upload a PDF.", 400
 
+
+@app.route('/highlight_pdf/<int:id>', methods=['GET', 'POST'])
+def highlight_pdf(id):
+    # Fetch contract details from Supabase
+    response = supabase.table('Contract').select('*').eq('id', id).execute()
+    if not response.data:
+        return "Contract not found", 404
+    
+    contract = response.data[0]
+
+    # **Get summary from database**
+    summary = contract.get('contract_summary', '')
+    if not summary:
+        return "No summary available for highlighting", 400  # Bad request
+
+    # Handle POST request
+    if request.method == "POST":
+        try:
+            # Check if highlighted PDF already exists
+            if contract.get('highlight_pdf'):
+                return redirect(url_for('view_highlighted_pdf', id=id))
+
+            # Download the original PDF
+            pdf_data = supabase.storage.from_(BUCKET_NAME).download(contract['contract_pdf'])
+
+            # Generate highlighted PDF using the **database summary**
+            highlighted_pdf_bytes = pdf_highlighter(pdf_data, summary)
+
+            # Unique filename
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            highlighted_file_name = f"{timestamp}_highlighted_{contract['contract_pdf']}"
+
+            # Upload highlighted PDF
+            supabase.storage.from_(BUCKET_NAME).upload(
+                path=highlighted_file_name,
+                file=highlighted_pdf_bytes,
+                file_options={"content-type": "application/pdf"}
+            )
+
+            # Update database
+            supabase.table('Contract').update({
+                'highlight_pdf': highlighted_file_name
+            }).eq('id', id).execute()
+
+            return redirect(url_for('view_highlighted_pdf', id=id))
+
+        except Exception as e:
+            print(f"Error during highlighting: {str(e)}")
+            return f"Error highlighting file: {str(e)}", 500
+
+    # **If GET request, just display the contract instead of redirecting infinitely**
+    return render_template('contract.html', contract=contract)
+
