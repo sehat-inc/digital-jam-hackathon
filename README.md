@@ -15,7 +15,7 @@
 Covenant AI is a smart lease contract analysis system that leverages Agentic RAG for information retrieval.
 The RAG architecture is built without the use of external libraries/frameworks for scalability. 
 
-> For a comprehensive overview, please visit [the offical Covenant AI Documentation](https://sehat-inc.github.io/covenant-ai/) 
+> For a comprehensive overview, please visit [the offical Covenant AI Documentation](https://docs.google.com/document/d/1wF_BIUqBmTT5pCod0L1EdVWjJe7RHlbvKfGV_hV0Fkc/edit?usp=sharing) 
 
 
 ## Features
