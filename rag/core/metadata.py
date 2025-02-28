@@ -1,27 +1,20 @@
-from chunking import SemanticChunker
-
 from typing import List
 
-chunker = SemanticChunker()
-
 class BuildMetaData:
-    def __init__(self, chunks: List, doc_id: int, doc_title: str, lease_type: str):
-        self.chunks = chunks
-        self.doc_id = doc_id
-        self.doc_title = doc_title
-        self.lease_type = lease_type
+    def __init__(self):
+        pass
 
-    def build(self):
+    def build(self, chunks: List, doc_id: int, doc_title: str, lease_type: str):
         metadata = []
 
-        for i, content in enumerate(self.chunks):
-            prechunk_id = "" if i == 0 else f"{self.doc_id}#{i-1}"
-            postchunk_id = "" if i + 1 == len(self.chunks) else f"{self.doc_id}#{i+1}"
+        for i, content in enumerate(chunks):
+            prechunk_id = "" if i == 0 else f"{doc_id}#{i-1}"
+            postchunk_id = "" if i + 1 == len(chunks) else f"{doc_id}#{i+1}"
 
             metadata.append({
-                "id" : f"{self.doc_id}#{i}",
-                "title" : self.doc_title,
-                "lease_type" : self.lease_type,
+                "id" : f"{doc_id}#{i}",
+                "title" : doc_title,
+                "lease_type" : lease_type,
                 "content" : content,
                 "prechunk_id" : prechunk_id,
                 "postchunk_id" : postchunk_id

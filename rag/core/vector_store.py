@@ -34,13 +34,14 @@ class RetrievalChunks:
         self.model = model
         self.index = index
 
-    def retreive_chunks(self, text):
+    def retreive_chunks(self, text, doc_id):
         xq = self.model.encode([text])[0].tolist()
 
         matches = self.index.query(
             vector=xq,
             top_k=3,
-            include_metadata=True
+            include_metadata=True, 
+            filter={"doc_id": {"$eq" : doc_id}}
         )
 
         chunks = []

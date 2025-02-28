@@ -3,7 +3,7 @@ import google.generativeai as genai
 from typing import List, Dict, Any
 import time
 
-from vector_store import RetrievalChunks
+from .vector_store import RetrievalChunks
 
 
 HISTORY_LENGTH = 5 
@@ -22,9 +22,9 @@ class RAGChatbot:
         genai.configure(api_key=self.api_key)
         return genai.GenerativeModel('gemini-1.5-flash')
     
-    def retrieve_context(self, query: str) -> List[str]:
+    def retrieve_context(self, query: str, doc_id) -> List[str]:
         """Retrieve relevant chunks for the query using the existing retrieve_chunks function."""
-        return self.retrieve.retrieve_chunks(query)
+        return self.retrieve.retrieve_chunks(query, doc_id)
         
     def format_conversation_history(self) -> str:
         """Format the conversation history for context."""
@@ -38,10 +38,10 @@ class RAGChatbot:
             
         return formatted_history
     
-    def generate_prompt(self, query: str) -> str:
+    def generate_prompt(self, query: str, doc_id) -> str:
         """Generate the full prompt with context, history, and current query."""
         # Retrieve relevant context
-        context_chunks = self.retrieve_context(query)
+        context_chunks = self.retrieve_context(query, doc_id)
         
         # Format context chunks
         context_text = "\n".join([f"Context {i+1}: {chunk}" for i, chunk in enumerate(context_chunks)])
@@ -76,9 +76,9 @@ Answer:
         if len(self.conversation_history) > self.max_history:
             self.conversation_history = self.conversation_history[-self.max_history:]
     
-    async def generate_response_stream(self, query: str):
+    async def generate_response_stream(self, query: str, doc_id: int):
         """Generate a streaming response to the user query."""
-        prompt = self.generate_prompt(query)
+        prompt = self.generate_prompt(query, doc_id)
         
         # Create a streaming response
         response_stream = await self.model.generate_content_async(
@@ -114,14 +114,3 @@ Answer:
         
         return response_text
     
-#while True:
-#    user_input = input("\nYou: ")
-#
-#    if user_input.lower() == 'exit':
-#        print("Goodbye!")
-#        break
-#    print("\nAssistant: ", end="")
-#
-#    async for text_chunk in chatbot.generate_response_stream(user_input):
-#        print(text_chunk, end="", flush=True)
-#        time.sleep(0.01)

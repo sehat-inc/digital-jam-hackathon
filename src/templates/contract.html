@@ -15,7 +15,7 @@
     <div class="row mb-4">
         <div class="col">
             <h1>Contract Details</h1>
-            <p class="text-muted">Uploaded on: {{ contract.created_at|format_datetime }}</p>
+            <p class="text-white">Uploaded on: {{ contract.created_at|format_datetime }}</p>
         </div>
     </div>
 
@@ -28,8 +28,7 @@
 
         <!-- Highlight Key Terms Button -->
         <form action="{{ url_for('highlight_pdf', id=contract.id) }}" method="post">
-            <textarea class="form-control" id="summary" name="summary" rows="3" required>{{ contract.contract_summary }}</textarea>
-            <button type="submit" class="btn btn-success">Highlight Key Terms</button>
+             <button type="submit" class="btn btn-success">Highlight Key Terms</button>
         </form>
     </div>
 
