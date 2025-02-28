@@ -73,3 +73,82 @@ def index():
     response = supabase.table('Contract').select('*').order('created_at.desc').execute()
     contracts = response.data
     return render_template('index.html', contracts=contracts)
+
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'contract' not in request.files:
+        return redirect(request.url)
+    
+    file = request.files['contract']
+    contract_title = request.form.get('contract_title')  # Get the title from form
+
+    if file.filename == '':
+        return redirect(request.url)
+    
+    if file and file.filename.lower().endswith('.pdf'):
+        try:
+            # Save file temporarily
+            temp_dir = tempfile.mkdtemp()
+            temp_path = os.path.join(temp_dir, secure_filename(file.filename))
+            file.save(temp_path)
+            
+            # Extract text using OCR
+            extractor = PDFTextExtractor(temp_path)
+            extracted_content = extractor.extract_text()
+            print("Extraction done ", datetime.now().time())
+            
+            # Get text from all pages
+            all_text = "\n".join([page['text'] for page in extracted_content['text']])
+            
+            # Use the pre-initialized chunker instead of creating a new one
+            chunked_text = chunker.chunk_text(text=all_text)
+            print("Chunking done: ", datetime.now().time())
+           
+            # Generate summary
+            summary = summarizer._run(text=all_text)
+            print("Summary made: ", datetime.now().time())
+            
+            # Generate unique filename
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            file_name = f"{timestamp}_{secure_filename(file.filename)}"
+            
+            # Upload PDF to Supabase Storage
+            with open(temp_path, 'rb') as f:
+                file_data = f.read()
+                result = supabase.storage.from_(BUCKET_NAME).upload(
+                    path=file_name,
+                    file=file_data,
+                    file_options={"content-type": "application/pdf"}
+                )
+                print(f"Upload result: {result}")
+            
+            # Create database entry with contract title
+            contract_data = {
+                'title': contract_title,  # Adding title
+                'created_at': datetime.now().isoformat(),
+                'contract_pdf': file_name,
+                'contract_summary': summary
+            }
+            
+            insert_result = supabase.table('Contract').insert(contract_data).execute()
+            print(f"Database insert result: {insert_result}")
+            print(datetime.now().time())
+            
+            # Cleanup
+            os.remove(temp_path)
+            os.rmdir(temp_dir)
+            
+            return redirect(url_for('index'))
+            
+        except Exception as e:
+            print(f"Error during upload: {str(e)}")
+            # Cleanup on error
+            if 'temp_path' in locals() and os.path.exists(temp_path):
+                os.remove(temp_path)
+            if 'temp_dir' in locals() and os.path.exists(temp_dir):
+                os.rmdir(temp_dir)
+            return f"Error uploading file: {str(e)}", 500
+    else:
+        return "Invalid file type. Please upload a PDF.", 400
+
