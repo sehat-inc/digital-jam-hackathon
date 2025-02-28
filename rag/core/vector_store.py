@@ -30,18 +30,16 @@ def build_vectordb(index_name: str, dims: int = 384, metric: Literal["cosine", "
 
 
 class RetrievalChunks:
-    def __init__(self, model, index):
+    def __init__(self, model):
         self.model = model
-        self.index = index
 
-    def retreive_chunks(self, text, doc_id):
+    def retreive_chunks(self, text, index):
         xq = self.model.encode([text])[0].tolist()
 
-        matches = self.index.query(
+        matches = index.query(
             vector=xq,
             top_k=3,
-            include_metadata=True, 
-            filter={"doc_id": {"$eq" : doc_id}}
+            include_metadata=True
         )
 
         chunks = []
@@ -49,11 +47,15 @@ class RetrievalChunks:
         for m in matches["matches"]:
             content = m["metadata"]["content"]
             title = m["metadata"]["title"]
+
             pre = m["metadata"]["prechunk_id"]
             post = m["metadata"]["postchunk_id"]
 
-            other_chunks = self.index.fetch(ids=[pre, post])["vectors"]
 
+            print(index.fetch(ids=[pre, post]))
+
+            fetch_response = index.fetch(ids=[pre, post])
+            other_chunks = fetch_response.vectors
             prechunk = other_chunks[pre]["metadata"]["content"]
             postchunk = other_chunks[post]["metadata"]["content"]
 

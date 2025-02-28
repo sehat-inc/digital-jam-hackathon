@@ -12,6 +12,7 @@ class BuildMetaData:
             postchunk_id = "" if i + 1 == len(chunks) else f"{doc_id}#{i+1}"
 
             metadata.append({
+                "doc_id" : f"{doc_id}",
                 "id" : f"{doc_id}#{i}",
                 "title" : doc_title,
                 "lease_type" : lease_type,

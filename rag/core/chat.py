@@ -9,12 +9,12 @@ from .vector_store import RetrievalChunks
 HISTORY_LENGTH = 5 
 
 class RAGChatbot:
-    def __init__(self, model, index, api_key: str):
+    def __init__(self, model, api_key: str):
         self.api_key = api_key
         self.model = self._init_model()
         self.conversation_history = []
         self.max_history = HISTORY_LENGTH
-        self.retrieve = RetrievalChunks(model, index)
+        self.retrieve = RetrievalChunks(model)
 
         
     def _init_model(self):
@@ -22,9 +22,9 @@ class RAGChatbot:
         genai.configure(api_key=self.api_key)
         return genai.GenerativeModel('gemini-1.5-flash')
     
-    def retrieve_context(self, query: str, doc_id) -> List[str]:
+    def retrieve_context(self, query: str, index) -> List[str]:
         """Retrieve relevant chunks for the query using the existing retrieve_chunks function."""
-        return self.retrieve.retrieve_chunks(query, doc_id)
+        return self.retrieve.retreive_chunks(query, index )
         
     def format_conversation_history(self) -> str:
         """Format the conversation history for context."""
@@ -38,10 +38,10 @@ class RAGChatbot:
             
         return formatted_history
     
-    def generate_prompt(self, query: str, doc_id) -> str:
+    def generate_prompt(self, query: str, index) -> str:
         """Generate the full prompt with context, history, and current query."""
         # Retrieve relevant context
-        context_chunks = self.retrieve_context(query, doc_id)
+        context_chunks = self.retrieve_context(query, index)
         
         # Format context chunks
         context_text = "\n".join([f"Context {i+1}: {chunk}" for i, chunk in enumerate(context_chunks)])
@@ -76,41 +76,54 @@ Answer:
         if len(self.conversation_history) > self.max_history:
             self.conversation_history = self.conversation_history[-self.max_history:]
     
-    async def generate_response_stream(self, query: str, doc_id: int):
+    def generate_response_stream(self, query: str, index):
         """Generate a streaming response to the user query."""
-        prompt = self.generate_prompt(query, doc_id)
+        prompt = self.generate_prompt(query, index)
         
-        # Create a streaming response
-        response_stream = await self.model.generate_content_async(
+        response_stream = self.model.generate_content_async(
             prompt,
-            generation_config={"temperature": 0.2},
-            stream=True
+            generation_config={"temperature": 0.2}
         )
-        
+
         full_response = ""
-        
-        # Process and yield each chunk as it arrives
-        async for chunk in response_stream:
-            if hasattr(chunk, 'text'):
-                yield chunk.text
-                full_response += chunk.text
+        for chunk in response_stream:
+            full_response += chunk
+            yield chunk
+            full_response = full_response
         
         # Update conversation history with the complete response
         self.update_history(query, full_response)
+
+        return full_response
         
-    def generate_response(self, query: str) -> str:
+    def generate_response(self, query: str, index) -> str:
         """Generate a non-streaming response (for cases where streaming isn't needed)."""
-        prompt = self.generate_prompt(query)
+        prompt = self.generate_prompt(query, index)
         
+        print(f"\nQUERY: {prompt}")
+
         response = self.model.generate_content(
             prompt,
             generation_config={"temperature": 0.2}
         )
         
         response_text = response.text
+
+        print(f"\nRESPONSE: {response_text}")
         
         # Update conversation history
         self.update_history(query, response_text)
         
         return response_text
     
+#while True:
+#    user_input = input("\nYou: ")
+#
+#    if user_input.lower() == 'exit':
+#        print("Goodbye!")
+#        break
+#    print("\nAssistant: ", end="")
+#
+#    async for text_chunk in chatbot.generate_response_stream(user_input, dooc_id):
+#        print(text_chunk, end="", flush=True)
+#        time.sleep(0.01)

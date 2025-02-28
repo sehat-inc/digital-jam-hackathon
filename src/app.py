@@ -1,5 +1,6 @@
-import sys
+import sys 
 import os
+import asyncio
 # Add the project root directory to Python path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
@@ -7,7 +8,7 @@ sys.path.append(project_root)
 from sentence_transformers import SentenceTransformer
 from rag.core.chunking import SemanticChunker
 from rag.ocr.pdfExtractor import PDFTextExtractor
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, render_template, request, redirect, url_for, send_file, jsonify, Response
 from werkzeug.utils import secure_filename
 from supabase import create_client, Client
 from rag.core.stuffing_summarizer import SummarizerAgent
@@ -28,7 +29,6 @@ except LookupError:
     nltk.download('stopwords')
 stopwords_set = set(stopwords.words('english'))
 
-
 load_dotenv()   
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -38,6 +38,8 @@ supabase: Client = create_client(
     os.getenv('SERVICE_KEY'),
     os.getenv('ROLE_KEY')
 )
+
+
 
 BUCKET_NAME = 'contract-files'  # Changed bucket name to be more specific
 
@@ -59,6 +61,19 @@ pdf_highlighter = PDFHighlighter(
     similarity_threshold=0.63,
     min_sentence_length=10
 )
+
+# Setup Pinecone Index as global
+index_name = "covenant-ai"
+build_vectordb(index_name=index_name)
+pc_index = Pinecone.Index(index_name)
+
+# Initialize global chatbot variable
+# Initialize Chatbot
+chatbot = RAGChatbot(
+    api_key=os.getenv('GEMINI_API'),
+    model=encoder
+)
+
 # Custom filter for datetime formatting
 @app.template_filter('format_datetime')
 def format_datetime(value):
@@ -79,149 +94,108 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    global chatbot  # Make chatbot accessible outside function
+    global pc_index
+
     if 'contract' not in request.files:
         return redirect(request.url)
     
     file = request.files['contract']
-    contract_title = request.form.get('contract_title')  # Get the title from form
+    contract_title = request.form.get('contract_title')
 
-    if file.filename == '':
+    if file.filename == '' or not file.filename.lower().endswith('.pdf'):
         return redirect(request.url)
     
-    if file and file.filename.lower().endswith('.pdf'):
-        try:
-            # Save file temporarily
-            temp_dir = tempfile.mkdtemp()
-            temp_path = os.path.join(temp_dir, secure_filename(file.filename))
-            file.save(temp_path)
-            
-            # Extract text using OCR
-            extractor = PDFTextExtractor(temp_path)
-            extracted_content = extractor.extract_text()
-            print("Extraction done ", datetime.now().time())
-            
-            # Get text from all pages
-            all_text = "\n".join([page['text'] for page in extracted_content['text']])
-            
+    try:
+        # Save PDF Temporarily
+        temp_dir = tempfile.mkdtemp()
+        temp_path = os.path.join(temp_dir, secure_filename(file.filename))
+        file.save(temp_path)
 
-            # Use the pre-initialized chunker instead of creating a new one
+        # Process text extraction, summarization, and chunking
+        extractor = PDFTextExtractor(temp_path)
+        all_text = "\n".join([page['text'] for page in extractor.extract_text()['text']])
+        summary = summarizer._run(text=all_text)
+        chunked_text = chunker.chunk_text(text=all_text)
 
-            chunked_text = chunker.chunk_text(text=all_text)
-            print("Chunking done: ", datetime.now().time())
+        # Generate a unique filename
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        file_name = f"{timestamp}_{secure_filename(file.filename)}"
 
-            # Generate summary
-            summary = summarizer._run(text=all_text)
-            print("Summary made: ", datetime.now().time())
-            
-            # Generate unique filename
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            file_name = f"{timestamp}_{secure_filename(file.filename)}"
-            
-            # Upload PDF to Supabase Storage
-            with open(temp_path, 'rb') as f:
-                file_data = f.read()
-                result = supabase.storage.from_(BUCKET_NAME).upload(
-                    path=file_name,
-                    file=file_data,
-                    file_options={"content-type": "application/pdf"}
-                )
-                print(f"Upload result: {result}")
-            
-            # Create database entry with contract title
-            contract_data = {
-                'title': contract_title,  # Adding title
-                'created_at': datetime.now().isoformat(),
-                'contract_pdf': file_name,
-                'contract_summary': summary
-            }
-            
-            insert_result = supabase.table('Contract').insert(contract_data).execute()
-            print(f"Database insert result: {insert_result}")
-            print(datetime.now().time())
-            
+        # Upload PDF to Supabase
+        with open(temp_path, 'rb') as f:
+            supabase.storage.from_(BUCKET_NAME).upload(file_name, f.read(), file_options={"content-type": "application/pdf"})
 
-            response = supabase.table('Contract') \
-                   .select('id,title') \
-                   .order('created_at', desc=True) \
-                   .limit(1) \
-                   .execute()
+        # Insert Contract into Database
+        insert_result = supabase.table('Contract').insert({
+            'title': contract_title,
+            'created_at': datetime.now().isoformat(),
+            'contract_pdf': file_name,
+            'contract_summary': summary
+        }).execute()
 
-            if not response.data:
-                return "No contracts found", 404
+        # Fetch Latest Contract ID
+        response = supabase.table('Contract').select('id, title').order('created_at', desc=True).limit(1).execute()
+        if not response.data:
+            return "No contracts found", 404
 
-            latest_contract = response.data[0]
-            latest_id = latest_contract['id']
-            latest_title = latest_contract['title']
+        latest_contract = response.data[0]
+        latest_id, latest_title = latest_contract['id'], latest_contract['title']
 
+        # Build Metadata
+        metadata_builder = MetadataBuilder()
+        metadata = metadata_builder.build(chunks=chunked_text, doc_id=latest_id, doc_title=latest_title, lease_type='lease')
 
-            metadata_builder = MetadataBuilder()
-            metadata = metadata_builder.build(chunks=chunked_text, 
-                                              doc_id=latest_id, 
-                                              doc_title=latest_title, 
-                                              lease_type='lease')
-            
-            index_name = "covenant-ai"
-            build_vectordb(index_name=index_name)
-            index = Pinecone.Index(index_name)
+        # Encode and Upsert Metadata
+        ids = [m["id"] for m in metadata]
+        embeds = encoder.encode([m["content"] for m in metadata])
+        batch_size = 128
 
-            # Extract all IDs and content once (not inside loop)
-            ids = [m["id"] for m in metadata]
-            content = [m["content"] for m in metadata]
+        for i in range(0, len(metadata), batch_size):
+            i_end = min(i + batch_size, len(metadata))
+            batch_ids = ids[i:i_end]
+            batch_embeds = embeds[i:i_end]
+            batch_metadata = metadata[i:i_end]
 
-            # Encode everything once
-            embeds = encoder.encode(content)
+            pc_index.upsert(vectors=zip(batch_ids, batch_embeds, batch_metadata))
 
-            # Batch upsert to Pinecone
-            batch_size = 128  # Adjust based on Pinecone limits
+        # Cleanup
+        os.remove(temp_path)
+        os.rmdir(temp_dir)
 
-            for i in range(0, len(metadata), batch_size):
-                i_end = min(i + batch_size, len(metadata))
+        return redirect(url_for('view_contract', id=latest_id))
 
-                # Get batch
-                batch_ids = ids[i:i_end]
-                batch_embeds = embeds[i:i_end]
-                batch_metadata = metadata[i:i_end]
+    except Exception as e:
+        return f"Error: {str(e)}", 500
 
-                # Upsert batch to Pinecone
-                index.upsert(vectors=zip(batch_ids, batch_embeds, batch_metadata))
+@app.route('/chat', methods=['POST'])
+def chat():
+    global chatbot  # Access the global chatbot instance
+    
+    if chatbot is None:
+        return jsonify({"response": "Chatbot is not initialized. Please upload a document first."}), 400
+    
+    data = request.get_json()
+    user_input = data.get("prompt", "")
+    doc_id = data.get("doc_id")
+    print(f"DEBUG PRINT {doc_id} -- {type(doc_id)}")
 
-            # chatbot = RAGChatbot(
-            #     api_key=os.getenv('GEMINI_API'),
-            #     model=encoder,
-            #     index=index,
-            #     metadata=metadata,
-            #     max_history=5
-            # )
-            # while True:
-            #     user_input = input("\nYou: ")
+    index_name = "covenant-ai"
+    build_vectordb(index_name=index_name)
+    pc_index = Pinecone.Index(index_name)
 
-            #     if user_input.lower() == 'exit':
-            #         print("Goodbye!")
-            #         break
-            #     print("\nAssistant: ", end="")
+    if not user_input:
+        return jsonify({"response": "Please enter a message."})
 
-            #     async for text_chunk in chatbot.generate_response_stream(user_input, latest_id):
-            #         print(text_chunk, end="", flush=True)
-            #         time.sleep(0.01)
-
-            # Cleanup
-            os.remove(temp_path)
-            os.rmdir(temp_dir)
-            
-            return redirect(url_for('index'))
-            
-        except Exception as e:
-            print(f"Error during upload: {str(e)}")
-            # Cleanup on error
-            if 'temp_path' in locals() and os.path.exists(temp_path):
-                os.remove(temp_path)
-            if 'temp_dir' in locals() and os.path.exists(temp_dir):
-                os.rmdir(temp_dir)
-            return f"Error uploading file: {str(e)}", 500
-    else:
-        return "Invalid file type. Please upload a PDF.", 400
-
-
+    try:
+        response =  chatbot.generate_response(user_input, pc_index)
+        return jsonify({"response": response})
+        
+    
+    except Exception as e:
+        import traceback
+        print(traceback.format_exc())
+        return jsonify({"response": f"Error: {str(e)}"}), 500
 
 @app.route('/highlight_pdf/<int:id>', methods=['GET', 'POST'])
 def highlight_pdf(id):
@@ -275,8 +249,6 @@ def highlight_pdf(id):
     # **If GET request, just display the contract instead of redirecting infinitely**
     return render_template('contract.html', contract=contract)
 
-
-
 @app.route('/highlighted_pdf/<int:id>')
 def view_highlighted_pdf(id):
     # Fetch contract details from Supabase
@@ -294,20 +266,24 @@ def view_highlighted_pdf(id):
 
 @app.route('/contract/<int:id>')
 def view_contract(id):
-    # Fetch contract details from Supabase
+    
+    # Fetch contract details
     response = supabase.table('Contract').select('*').eq('id', id).execute()
     if not response.data:
         return "Contract not found", 404
-    
+
     contract = response.data[0]
-    
-    # Get public URL correctly
-    # Remove any full URLs or double slashes from the filename
+
+    # Get public URL
     filename = contract['contract_pdf'].split('/')[-1]
     contract['pdf_url'] = supabase.storage.from_(BUCKET_NAME).get_public_url(filename)
     
-    return render_template('contract.html', contract=contract)
+    # Check if highlighted PDF exists and get its URL
+    if contract.get('highlight_pdf'):
+        highlight_filename = contract['highlight_pdf'].split('/')[-1]
+        contract['highlight_pdf_url'] = supabase.storage.from_(BUCKET_NAME).get_public_url(highlight_filename)
 
+    return render_template('contract.html', contract=contract, chatbot_enabled=True, doc_id=id)
 
 @app.route('/download/<int:contract_id>')
 def download_contract(contract_id):
@@ -345,5 +321,3 @@ def download_contract(contract_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="container py-5">
 
     <!-- Debug Info -->
@@ -14,17 +15,20 @@
     <!-- Page Header -->
     <div class="row mb-4">
         <div class="col">
-            <h1>Contract Details</h1>
+            <h1>{{ contract.title }}</h1>
             <p class="text-white">Uploaded on: {{ contract.created_at|format_datetime }}</p>
         </div>
     </div>
 
     <!-- Top Action Buttons -->
     <div class="d-flex justify-content-between flex-wrap mb-4">
+        
         <!-- Chat with AI Button -->
-        <button class="btn btn-info chat-btn">
+        {% if chatbot_enabled %}
+        <button class="btn btn-primary chat-toggle">
             <i class="fas fa-comments"></i> Chat with AI
         </button>
+        {% endif %}
 
         <!-- Highlight Key Terms Button -->
         <form action="{{ url_for('highlight_pdf', id=contract.id) }}" method="post">
@@ -59,19 +63,194 @@
         </div>
     {% endif %}
 
-    <!-- Floating Chat Button -->
-    <div class="position-fixed bottom-3 end-3">
-        <button class="btn btn-primary rounded-circle shadow-lg chat-btn" style="width: 60px; height: 60px;">
-            <i class="fas fa-comments"></i>
-        </button>
+    <!-- Chat container -->
+    <div id="chat-container">
+        <div id="chat-header">
+            <span>Chat with AI</span>
+            <button id="close-chat">&times;</button>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="chat-input">
+            <input type="text" id="user-input" placeholder="Ask something about this contract...">
+            <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+        </div>
     </div>
 
 </div>
 
+<style>
+    #chat-container {
+        position: fixed;
+        right: -350px;
+        bottom: 20px;
+        width: 350px;
+        height: 700px;
+        background: #1e1e1e;
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(66, 64, 64, 0.3);
+        transition: right 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
+    
+    #chat-header {
+        background: #333;
+        padding: 10px;
+        border-radius: 10px 10px 0 0;
+        text-align: center;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    #close-chat {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    
+    #chat-messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #chat-messages div {
+        margin-bottom: 8px;
+        padding: 8px;
+        border-radius: 5px;
+        max-width: 80%;
+    }
+    
+    #chat-messages div:has(b:contains("You:")) {
+        background: #007bff;
+        align-self: flex-end;
+    }
+    
+    #chat-messages div:has(b:contains("AI:")) {
+        background: #333;
+        align-self: flex-start;
+    }
+    
+    #chat-input {
+        display: flex;
+        padding: 10px;
+        background: #222;
+        border-radius: 0 0 10px 10px;
+    }
+    
+    #user-input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        outline: none;
+        background: #444;
+        color: white;
+        border-radius: 5px;
+        margin-right: 8px;
+    }
+    
+    #send-message {
+        background: #007bff;
+        border: none;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    #send-message:hover {
+        background: #0069d9;
+    }
+</style>
+
+<!-- Chat Script -->
 <script>
-    document.querySelectorAll('.chat-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            alert("Chat feature coming soon!");
+    document.addEventListener("DOMContentLoaded", function() {
+        const chatToggle = document.querySelector(".chat-toggle");
+        const chatContainer = document.getElementById("chat-container");
+        const closeChat = document.getElementById("close-chat");
+        const sendMessage = document.getElementById("send-message");
+        const userInput = document.getElementById("user-input");
+        const chatMessages = document.getElementById("chat-messages");
+        
+        // Store the contract ID
+        const docId = {{ doc_id }};
+        
+        // Toggle chat container
+        if (chatToggle) {
+            chatToggle.addEventListener("click", function() {
+                chatContainer.style.right = "40px";
+            });
+        }
+        
+        // Close chat
+        closeChat.addEventListener("click", function() {
+            chatContainer.style.right = "-350px";
+        });
+        
+        // Send message function
+        function sendChatMessage() {
+            const message = userInput.value.trim();
+            if (message === "") return;
+            
+            // Display user message
+            chatMessages.innerHTML += `<div><b>You:</b> ${message}</div>`;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Clear input
+            userInput.value = "";
+            
+            // Add loading indicator
+            const loadingDiv = document.createElement("div");
+            loadingDiv.innerHTML = "<b>AI:</b> Thinking...";
+            chatMessages.appendChild(loadingDiv);
+            
+            // Send request to server
+            fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    prompt: message,
+                    doc_id: docId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove loading indicator
+                chatMessages.removeChild(loadingDiv);
+                
+                // Display AI response
+                chatMessages.innerHTML += `<div><b>AI:</b> ${data.response}</div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(error => {
+                // Remove loading indicator
+                chatMessages.removeChild(loadingDiv);
+                
+                // Display error
+                chatMessages.innerHTML += `<div><b>AI:</b> Sorry, there was an error: ${error}</div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+        }
+        
+        // Send button click
+        sendMessage.addEventListener("click", sendChatMessage);
+        
+        // Enter key press
+        userInput.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                sendChatMessage();
+            }
         });
     });
 </script>
