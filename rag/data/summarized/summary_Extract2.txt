@@ -1,0 +1,110 @@
+**German Master Lease and Servicing Agreement Summary**
+
+This document summarizes the key terms of the German Master Lease and Servicing Agreement dated September 25, 2018, and amended and restated multiple times, most recently on June 26, 2024.  The agreement is between Hertz Fleet Limited (Lessor), Hertz Autovermietung GmbH (Initial Lessee and Servicer), other permitted lessees (Additional Lessees), and BNP Paribas Trust Corporation UK Limited (German Security Trustee).
+
+**I. Parties:**
+
+* **Lessor:** Hertz Fleet Limited (Ireland)
+* **Initial Lessee & Servicer:** Hertz Autovermietung GmbH (Germany)
+* **Additional Lessees:**  Affiliates of Hertz Autovermietung GmbH that accede to the agreement.
+* **German Security Trustee:** BNP Paribas Trust Corporation UK Limited
+
+**II. Key Dates:**
+
+* **Originally Dated:** September 25, 2018
+* **Last Amended and Restated:** June 26, 2024
+* **Lease Commencement Date:** Closing Date (defined elsewhere, likely a specific date within the full agreement)
+* **Lease Expiration Date:** Later of (i) final payment of the German Note and (ii) Vehicle Lease Expiration Date for the last leased vehicle.
+* **Vehicle Lease Commencement Date:** Date specified in the Lease Vehicle Acquisition Schedule for each vehicle; for vehicles previously leased under a terminated agreement, it’s the Closing Date.
+* **Vehicle Lease Expiration Date:** Earliest of: Disposition Date, Rejection Date (if applicable), or 24/48/60 months after the Vehicle Lease Commencement Date (depending on vehicle type).
+* **Payment Date:**  Defined elsewhere, indicating the regular payment schedule.  Example:  26 November 2018 was a special first Payment Date.
+
+
+**III. Nature of Agreement:**
+
+* A master lease agreement governing the lease of vehicles to various Lessees.
+*  Each lease is considered a single, indivisible lease of all vehicles, not separate leases.
+* Lessees have no option to purchase leased vehicles.
+
+**IV. Lease of Vehicles:**
+
+* **Existing Fleet:** Vehicles previously leased under a terminated agreement are included in this master lease, effective from the Closing Date.
+* **New Vehicles:** Additional vehicles can be added to the lease from time to time, subject to conditions precedent (no default, true representations and warranties, eligible vehicle, lease expiration date not passed, full payment if purchased non-credit, purchase under the German Master Fleet Purchase Agreement).
+* **Lease Vehicle Acquisition Schedules:**  These schedules identify the vehicles each Lessee wants to lease, and include Basic Lease Vehicle Information.
+* **Vehicle Inspection and Rejection:** Lessees have a 5-day inspection period to reject non-conforming vehicles.  Rejection is subject to the Lessor's rights under the Vehicle Purchasing Agreement.  Rejected vehicles are to be disposed of by the Servicer.
+* **Vehicle Return:** Lessees can return vehicles before the Maximum Lease Termination Date but must return them on or before the Maximum Lease Termination Date or Vehicle Lease Expiration Date (unless a Disposition Date has already occurred).
+* **Vehicle Redesignation (Program vs. Non-Program Vehicles):**  The agreement outlines processes for changing the designation of a vehicle between "Program Vehicle" (likely under a manufacturer program) and "Non-Program Vehicle," with associated payment implications.
+
+**V. Rent and Lease Charges:**
+
+* **Monthly Base Rent:** Calculated pro rata based on the Depreciation Charge for each vehicle.
+* **Final Base Rent:**  Calculated pro rata based on the Depreciation Charge as of the Disposition Date.
+* **Monthly Variable Rent:** Calculated based on interest accrued on the German Note, German Carrying Charges, and the Net Book Value of the leased vehicles.
+* **Rental Adjustment:** The Servicer adjusts the total rent to ensure the Lessor's net income matches a target amount (German Minimum Profit Amount).
+* **Casualty/Ineligible Vehicles:** Lessees report these, and the Lessor transfers title to the Lessee, with the Lessee entitled to insurance proceeds.
+* **Payments:** Detailed payment structure specified, including Base Rent, Variable Rent, and other charges (e.g., Redesignation amounts, Program Vehicle Depreciation Assumption True-Up Amount).  Default interest is payable for late payments.
+* **Currency:** EUR
+* **Tax Gross-Up:** Lessees are responsible for any tax deductions and gross-up payments.
+* **Prepayments:**  Lessees can make non-refundable prepayments.
+* **Ordering and Delivery Expenses:**  Lessees pay these.
+
+
+**VI. Vehicle Operational Covenants:**
+
+* **Maintenance and Repairs:** Lessees are responsible.
+* **Insurance:**  Lessees must maintain insurance (including Motor Third Party Liability Cover), promptly file claims, and notify the Lessor and Trustee of changes.  The Lessor has the option to replace insurance and be reimbursed by the Lessee.
+* **Fees, Penalties, and Fines:**  Lessees are responsible for registration fees, license fees, traffic summonses, penalties, and fines. The Lessor may pay these and be reimbursed.
+* **Vehicle Use:**  Lessees can use vehicles for their car rental business and permit subleasing under specific criteria related to the type of sublessee and limitations on the number of vehicles.
+* **Manufacturer's Warranties:** Lessees can make warranty claims.
+* **Program Vehicle Condition Notices:** Lessees must notify the Lessor and Servicer of events affecting Program Vehicles.
+
+**VII. Servicer Functions and Compensation:**
+
+* **Servicer Appointment:** Hertz Autovermietung GmbH is appointed as the Servicer.
+* **Servicer Functions:** Detailed responsibilities, including vehicle return direction, disposition of returned vehicles, management of Vehicle Purchasing Agreements, claims assistance, and tax and regulatory compliance support.
+* **Servicing Standard:**  The Servicer must adhere to this standard in performing its duties.
+* **Servicer's Monthly Fee:**  A fee (0.50% per annum on the Net Book Value of Lease Vehicles) is payable to the Servicer, plus reasonable costs for vehicle sales.
+* **Sub-Servicers:** The Servicer can delegate some tasks but remains liable.
+* **Servicer Records and Reports:**  The Servicer must maintain and report on vehicle records to the German Security Trustee.
+* **Servicer Resignation:**  The Servicer can resign with 14 days' notice, provided a replacement is in place.
+
+**VIII. Representations and Warranties:**
+
+* Lessees represent and warrant their organizational status, authorization to enter into the agreement, compliance with laws and regulations, and the accuracy of information provided.
+
+**IX. Affirmative Covenants:**
+
+* Lessees must maintain their corporate existence, keep accurate records, allow inspections, and provide financial reports.
+
+
+**X. Default and Remedies:**
+
+* **Lease Event of Default:**  Defined as late payments, unauthorized assignments, breach of covenants, bankruptcy, invalidity of the agreement, Servicer Default or Liquidation Event.
+* **Effects of Default:**  The Lessor can terminate leases, take possession of vehicles, and pursue legal remedies.
+* **Measure of Damages:**  The Lessor can recover unpaid rent, expenses, attorney's fees, and interest.
+* **Servicer Default:** Defined as breach of the agreement, bankruptcy, failure to make payments, and failure to properly maintain records.
+* **Liquidation Event:**   Rights and remedies of the German Security Trustee are triggered.
+
+**XI. Special Provisions:**
+
+* **Additional Lessees:** Affiliates of German OpCo can join the agreement.
+* **Value Added Tax (VAT):**  Details how VAT is handled in payments.
+* **Security and Assignments:**  The Lessor's rights are pledged to the Trustee; the Lessor can assign its rights, but Lessees cannot assign theirs without consent.
+* **Limited Liability of Lessor:**  Limits the Lessor's liability except for intentional acts, gross negligence, or negligent breach of material contractual obligations.
+* **Non-Petition and No Recourse:**  Restrictions on legal actions against Hertz Fleet Limited, except for the German Security Trustee.  This clause protects Hertz Fleet Limited from direct claims by other parties.
+* **Submission to Jurisdiction:**  Exclusive jurisdiction in the courts of Frankfurt am Main.
+* **Governing Law:**  German law.
+* **Notices:**  Method of delivering notices specified.
+* **Entire Agreement:**  The agreement, Manufacturer Programs, schedules, and related documents constitute the complete understanding.
+* **Modification and Severability:**  Modifications require written agreement from all parties; invalid clauses are to be replaced with provisions reflecting the parties' intent.
+* **Survivability:** Certain liabilities survive termination.
+* **Counterparts:**  Multiple counterparts are valid.
+* **Electronic Execution:**  Electronic signatures are valid.
+* **Lessee Termination and Resignation:**  Lessees (except German OpCo) can resign with written notice, subject to payment of dues and vehicle return.
+* **Third-Party Rights:**  The agreement doesn't benefit third parties.
+* **Governing Language:** English, except for German terms with specific legal meaning.
+* **Power of Attorney:**  Governs the laws applying to any power of attorney used.
+* **Rescission or Nullification:** If a provision is invalid, it will be replaced with a valid provision reflecting the original intent.
+
+
+This summary is for informational purposes only and should not be considered legal advice.  The full agreement should be reviewed for complete understanding and legal guidance.

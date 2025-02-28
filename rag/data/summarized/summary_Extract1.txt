@@ -1,0 +1,93 @@
+**Master Motor Vehicle Operating Lease and Servicing Agreement (HVF III) Summary**
+
+**Parties Involved:**
+
+*   **Lessor:** Hertz Vehicle Financing III LLC (HVF III)
+*   **Lessees:** The Hertz Corporation, DTG Operations, Inc., and other permitted lessees (Affiliates of The Hertz Corporation).
+*   **Servicer:** The Hertz Corporation
+*   **Guarantor:** The Hertz Corporation
+*   **Trustee:** The Bank of New York Mellon Trust Company, N.A. (for the Noteholders)
+*   **Collateral Agent:** The Bank of New York Mellon Trust Company, N.A.
+*   **Vehicle-Only Collateral Agent:** A newly created special purpose entity.
+
+**Key Dates:**
+
+*   **Dated as of:** June 29, 2021
+*   **Operating Lease Commencement Date:** Initial Closing Date (June 29, 2021)
+*   **Operating Lease Expiration Date:** The later of (i) the final payment of the Notes and (ii) the Vehicle Operating Lease Expiration Date of the last leased vehicle.
+*   **Payment Date:** 25th of each month (or next business day if the 25th is not a business day), starting July 26, 2021.
+*   **Determination Date:** 5 Business Days before each Payment Date.
+*   **Vehicle Operating Lease Commencement Date:** Date referenced in the Lease Vehicle Acquisition Schedule, but no later than the Vehicle Funding Date (when HVF III expends funds to acquire the vehicle).
+*   **Vehicle Operating Lease Expiration Date:** The earliest of: Disposition Date, Rejection Date (if rejected), Maximum Lease Termination Date.
+*   **Maximum Lease Termination Date:** Varies depending on vehicle type (48 or 72 months for cars/trucks; 84 months for medium-duty trucks).
+*   **Inspection Period:** 5 calendar days from vehicle receipt.
+*   **Due Date:** 90th day after Disposition Date (for payments from manufacturers).
+*   **Lessee Resignation Notice Effective Date:** Date of notice delivery to Lessor and Servicer.
+
+**Nature of Agreement:**
+
+*   This is intended to be a "true lease," but if deemed a financing arrangement by a court, it will be considered a security agreement.
+*   The lease covers all vehicles as a single, indivisible unit.  Adding or removing vehicles does not change this.
+*   Lessees have a leasehold interest and an option to purchase vehicles at the greater of Net Book Value or Market Value.  However, vehicles purchased under the Purchase Agreement cannot be purchased by the Lessee.
+*   Lessees have the option to return vehicles before the Maximum Lease Termination Date, but the Vehicle Term continues until the Vehicle Operating Lease Expiration Date.
+*   Lessees must return vehicles on or before their Maximum Lease Termination Date.
+
+**Rent and Lease Charges:**
+
+*   Rent is paid monthly.  It includes:
+    *   **Monthly Base Rent:** Pro-rata portion of the Depreciation Charge for each vehicle.
+    *   **Final Base Rent:** Pro-rata portion of the Depreciation Charge as of the Disposition Date.
+    *   **Monthly Variable Rent:** Calculated based on interest accrued on the Notes and the Net Book Value of the vehicles.
+    *   **Program Vehicle Depreciation Assumption True-Up Amount:** Paid if the estimated depreciation differs from the actual depreciation.  
+    *   **Pre-VOLCD Program Vehicle Depreciation Amount:** Paid for depreciation accrued before the Vehicle Operating Lease Commencement Date on certain Program Vehicles.
+    *   **Redesignation to Non-Program Amount:** Paid if a Program Vehicle is redesignated as a Non-Program Vehicle.
+    *   **Redesignation to Program Amount:** Paid by the Lessor if a Non-Program Vehicle is redesignated as a Program Vehicle.
+    *   **Casualty Payment Amount:** Paid if a vehicle is a Casualty or Ineligible Vehicle.
+    *   **Program Vehicle Special Default Payment Amount:** Paid for excess damage or mileage on Program Vehicles.
+    *   **Non-Program Vehicle Special Default Payment Amount:**  A calculation based on Program Vehicle Special Default Payment Amounts.
+    *   **Early Program Return Payment Amount:** Paid if a Program Vehicle is returned before the Minimum Program Term End Date.
+
+*   Payments must be made in immediately available funds by 12:00 noon (NYC time) on the Payment Date.
+*   Delinquent payments accrue default interest (either HVF III's overdue interest rate on the Notes, or the Reference Rate plus 1%).
+*   Prepayments are allowed.
+*   Lessees pay ordering and delivery expenses (unless included in the Capitalized Cost).
+*   Lessees receive unexpired license plate credits.
+
+**Vehicle Operational Covenants:**
+
+*   **Net Lease:** Lessees bear all responsibility for maintenance, repairs, fuel, insurance (including liability and physical damage;  Lessee must maintain a minimum of $50,000,000 in catastrophic physical damage insurance naming the Collateral Agent as loss payee), registration fees, taxes, traffic violations, penalties, and fines.  Lessor *may* pay these and seek reimbursement.
+*   **Vehicle Use:** Primarily in the US, with limited use in Canada and Mexico.  Lessees can sublet to certain entities under specific conditions (see Section 5.2.2 for detailed criteria).
+*   **Non-Disturbance:** Lessees' quiet enjoyment is protected as long as obligations are met, subject to inspection rights of Lessor and Trustee.
+*   **Manufacturer's Warranties:** Lessees can make warranty claims.
+*   **Program Vehicle Condition Notices:** Lessees must notify Lessor and Servicer of potential redesignation events.
+
+**Default and Remedies:**
+
+*   **Events of Default (Operating Lease Event of Default):** Nonpayment of rent (5 consecutive business days), unauthorized assignment, breach of covenants (30 days after notice), inaccurate representations/warranties, bankruptcy events, termination of agreement, Servicer Default, or a Liquidation Event of Default.
+*   **Consequences of Default:** Lessor can pursue legal action, terminate lease, repossess vehicles, and recover damages (see Section 9.5 for damage calculation).
+*   **Liquidation Event:** Trustee has rights to exercise remedies in Base Indenture, including repossession and sale of vehicles.
+*   **Servicer Default:** Failure to perform duties, bankruptcy, nonpayment, or inaccurate representations/warranties.  Trustee can replace Servicer.
+*   **Measure of Damages:** Unpaid rent, out-of-pocket expenses, attorneys' fees, and interest.
+
+**Guaranty:**
+
+*   The Hertz Corporation unconditionally guarantees the Lessees' obligations.
+*   Guarantor waives several defenses.
+*   Guarantor is liable for Lessor's expenses in enforcing the guaranty.
+
+**Termination:**
+
+*   Lessees (other than Hertz) can resign by providing written notice (Exhibit A).  They must pay all due amounts and return vehicles.  Pre-resignation liabilities remain.
+*   Lessor can terminate the lease upon an Operating Lease Event of Default.
+
+**Special Provisions:**
+
+*   The agreement is governed by New York law.
+*   Jury trial is waived.
+*   Additional Lessees (Permitted Lessees) can join under specific conditions (Annex A).
+*   Lessor can assign its rights to the Trustee.
+*   Lessees cannot assign the agreement except for permitted subleases.
+*   Lessor is not liable for vehicle defects or consequential damages.  Vehicles are leased "as is".
+*   Lessees agree not to file bankruptcy proceedings against the Lessor for a period of one year and one day after full payment of the Notes.
+
+**Confidentiality:**  All information has been included as instructed, regardless of confidentiality.  This summary is for informational purposes only and should not substitute legal advice.  A legal professional should review the full contract.

@@ -1,0 +1,93 @@
+**Master Motor Vehicle Operating Lease and Servicing Agreement (HVIF) Summary**
+
+**Parties Involved:**
+
+* **Lessor:** Hertz Vehicle Interim Financing LLC (HVIF)
+* **Lessees:** The Hertz Corporation, DTG Operations, Inc., and other permitted lessees (Additional Lessees)
+* **Servicer & Guarantor:** The Hertz Corporation
+
+**Effective Date:** November 25, 2020
+
+**Nature of Agreement:**
+
+* This is a net lease agreement for a fleet of vehicles.  The Lessor retains ownership; Lessees only have leasehold interest.
+* The agreement is considered an indivisible lease of all vehicles as a single economic unit; it cannot be severed.  Any modification to add or remove vehicles will not alter this indivisibility.
+*  Lessees have the option to purchase vehicles at the greater of the Net Book Value or Market Value at the end of their lease term.
+* **Hell-or-High-Water Clause:** Lessee's obligation to pay rent is absolute and unconditional, regardless of vehicle condition, damage, loss, or any other circumstance.  This is a net lease, and lessees bear all costs (maintenance, repairs, insurance, etc.). Lessees waive rights to terminate or reduce rent except as explicitly defined within this agreement (see section 25).
+
+
+**Lease Term:**
+
+* **Vehicle Term:** Varies depending on the vehicle and its designation (Program or Non-Program vehicle), lease start date, rejection, disposition, or special term applicable to specific states (see table below).  Multiple vehicle terms can exist for a given vehicle.  The "Vehicle Operating Lease Commencement Date" starts the term and may vary slightly from vehicle funding dates.
+* **Master Lease Term:** Begins on the HVIF Closing Date (November 25, 2020) and ends on the later of the final payment of HVIF Notes or the expiration of the last vehicle's lease term.
+
+**Rent and Lease Charges:**
+
+* **Monthly Base Rent:**  Calculated pro rata based on the number of days in a month included in a vehicle's lease term, using a 30/360-day basis. Uses "Depreciation Charge" as the basis for calculation.
+* **Final Base Rent:** Pro rata depreciation charge for the month in which the vehicle's Disposition Date occurs.
+* **Monthly Variable Rent:** Consists of: a portion of accrued interest on HVIF Notes, 2.0% per annum of the Net Book Value of the vehicle, and any recovered incentive rebates.
+* **Payment Date:** The 25th of each month (or the next business day if the 25th is not a business day).
+* **Prepayments:** Allowed but non-refundable.
+* **Delinquent Payments:** Subject to default interest equal to the HVIF's overdue interest rate or the Reference Rate plus 1.0%.
+* **Other Charges:** Lessees are responsible for ordering and delivery expenses, fees, traffic tickets, penalties, and fines.
+
+
+**Vehicle Operational Covenants:**
+
+* **Maintenance and Repairs:** Lessees are responsible for all maintenance and repairs. Lessees responsible for fuel, lubricants and coolants.
+* **Insurance:** Lessees must maintain comprehensive public liability, property damage, and catastrophic physical damage insurance (minimum $50,000,000) naming the Collateral Agent as loss payee.
+* **Vehicle Use:** Primarily in the United States with limited use in Canada and Mexico. Subletting is permitted under specific conditions, and the sublease must be subject to this agreement and subordinate in all respects. Reporting requirements for subleases exist.  Subleasing does not absolve the Lessee from their lease obligations.
+
+
+**Servicer Functions and Compensation:**
+
+* The Hertz Corporation acts as Servicer, responsible for directing vehicle returns, arranging disposal, calculating lease charges, providing statements, and returning vehicles to manufacturers.
+* The Servicer receives a monthly fee of 0.50% per annum of the outstanding Net Book Value of the Lease Vehicles and may be reimbursed for costs incurred in the sale of returned vehicles.
+* The Servicer can delegate tasks to affiliates (Sub-Servicers).
+
+
+**Default and Remedies:**
+
+* **Events of Default (HVIF Operating Lease Event of Default):** Non-payment of rent (5 consecutive business days), unauthorized assignment, breach of covenants (30 consecutive days), inaccurate representations and warranties, bankruptcy events (Lessees or Guarantor), Agreement invalidity, Amortization Events (pre-Emergence Date), Servicer Default, and HVIF Liquidation Event.
+* **Lessor's Remedies:** Legal action to enforce performance or recover damages. The Lessor may terminate Lessees' rights of possession, take possession of the vehicles, and direct title transfer. All remedies are cumulative, and exercising one will not waive others.  See Section 9.5 for a description of how damages are calculated.
+* **Trustee's Remedies:** Upon HVIF Liquidation Event, the Trustee has rights to take possession and dispose of the Lease Vehicles sufficient to cover the outstanding debt.
+* **Servicer Default:**  Failure to comply with agreement, bankruptcy, non-payment, inaccurate representations/warranties (30 consecutive days).
+* **Application of Proceeds from Default:** At the Lessor’s discretion.
+
+**Guaranty:**
+
+* The Hertz Corporation unconditionally guarantees Lessees' obligations. The guarantor's liability is independent of the Lessees' obligations and remains effective for the full amount due.  The Lessor can pursue the Guarantor directly without first going after the Lessees.
+* The Guarantor waives many defenses normally available to guarantors, including those based on the invalidity of the lease, the Lessor's actions, or the Lessees' defenses.
+
+**Termination:**
+
+* **Lessee Termination:** Lessees (other than Hertz) may terminate by providing written notice; however, they must satisfy all outstanding obligations (including those outlined in sections 4.7.1 and 4.7.2) and return vehicles according to the agreement.  This does not relieve them of liability for obligations incurred before the termination date.
+
+
+**Special Provisions:**
+
+* **Vehicle Redesignation:** Vehicles can be redesignated between HVIF Program Vehicle and HVIF Non-Program Vehicle status under various circumstances, leading to payments between the Lessor and Lessee.
+* **Trade or Business Use:** Lessees certify vehicles will be used for business purposes.
+* **Governing Law:** New York State law.
+* **No Petition:** Lessees agree not to initiate bankruptcy proceedings against the Lessor for a period of one year and one day after the full payment of HVIF notes.
+* **Third-Party Beneficiaries:** The Trustee, Collateral Agent, and Controlling Party are considered third-party beneficiaries.
+
+
+**Special Term Table for Lease Vehicles:**
+
+| Jurisdiction of Title        | Special Term              |
+|-----------------------------|---------------------------|
+| State of Illinois            | One (1) year              |
+| State of Iowa                | Eleven (11) months         |
+| State of Maine               | Eleven (11) months         |
+| State of Maryland            | 180 days                  |
+| Commonwealth of Massachusetts | Eleven (11) months         |
+| State of Nebraska            | Thirty (30) days           |
+| State of South Dakota        | Twenty-eight (28) days      |
+| State of Texas               | 181 days                  |
+| State of Vermont             | Eleven (11) months         |
+| Commonwealth of Virginia     | Eleven (11) months         |
+| State of West Virginia       | Thirty (30) days           |
+
+
+This summary is for informational purposes only and does not constitute legal advice.  The full agreement should be reviewed for complete and accurate details.
