@@ -10,7 +10,7 @@ from rag.ocr.pdfExtractor import PDFTextExtractor
 from flask import Flask, render_template, request, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
 from supabase import create_client, Client
-from rag.core.summarizer import SummarizerAgent
+from rag.core.stuffing_summarizer import SummarizerAgent
 import google.generativeai as genai
 import tempfile
 from datetime import datetime
