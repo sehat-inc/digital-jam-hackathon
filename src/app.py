@@ -188,7 +188,7 @@ def chat():
         return jsonify({"response": "Please enter a message."})
 
     try:
-        response =  chatbot.generate_response(user_input, pc_index)
+        response =  chatbot.generate_response(user_input, pc_index, doc_id)
         return jsonify({"response": response})
         
     

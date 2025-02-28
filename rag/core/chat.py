@@ -22,9 +22,9 @@ class RAGChatbot:
         genai.configure(api_key=self.api_key)
         return genai.GenerativeModel('gemini-1.5-flash')
     
-    def retrieve_context(self, query: str, index) -> List[str]:
+    def retrieve_context(self, query: str, index, doc_id) -> List[str]:
         """Retrieve relevant chunks for the query using the existing retrieve_chunks function."""
-        return self.retrieve.retreive_chunks(query, index )
+        return self.retrieve.retreive_chunks(query, index, doc_id )
         
     def format_conversation_history(self) -> str:
         """Format the conversation history for context."""
@@ -38,10 +38,10 @@ class RAGChatbot:
             
         return formatted_history
     
-    def generate_prompt(self, query: str, index) -> str:
+    def generate_prompt(self, query: str, index, doc_id) -> str:
         """Generate the full prompt with context, history, and current query."""
         # Retrieve relevant context
-        context_chunks = self.retrieve_context(query, index)
+        context_chunks = self.retrieve_context(query, index, doc_id)
         
         # Format context chunks
         context_text = "\n".join([f"Context {i+1}: {chunk}" for i, chunk in enumerate(context_chunks)])
@@ -76,9 +76,9 @@ Answer:
         if len(self.conversation_history) > self.max_history:
             self.conversation_history = self.conversation_history[-self.max_history:]
     
-    def generate_response_stream(self, query: str, index):
+    def generate_response_stream(self, query: str, index, doc_id):
         """Generate a streaming response to the user query."""
-        prompt = self.generate_prompt(query, index)
+        prompt = self.generate_prompt(query, index, doc_id)
         
         response_stream = self.model.generate_content_async(
             prompt,
@@ -96,9 +96,9 @@ Answer:
 
         return full_response
         
-    def generate_response(self, query: str, index) -> str:
+    def generate_response(self, query: str, index, doc_id) -> str:
         """Generate a non-streaming response (for cases where streaming isn't needed)."""
-        prompt = self.generate_prompt(query, index)
+        prompt = self.generate_prompt(query, index, doc_id)
         
         print(f"\nQUERY: {prompt}")
 

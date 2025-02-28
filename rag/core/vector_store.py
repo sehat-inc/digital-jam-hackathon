@@ -33,38 +33,54 @@ class RetrievalChunks:
     def __init__(self, model):
         self.model = model
 
-    def retreive_chunks(self, text, index):
+    def retreive_chunks(self, text, index, doc_id):
         xq = self.model.encode([text])[0].tolist()
 
         matches = index.query(
             vector=xq,
             top_k=3,
-            include_metadata=True
+            include_metadata=True, 
+            filter={
+                "doc_id": {"$eq": f"{doc_id}"}
+            }
         )
 
         chunks = []
-
         for m in matches["matches"]:
             content = m["metadata"]["content"]
             title = m["metadata"]["title"]
-
-            pre = m["metadata"]["prechunk_id"]
-            post = m["metadata"]["postchunk_id"]
-
-
-            print(index.fetch(ids=[pre, post]))
-
-            fetch_response = index.fetch(ids=[pre, post])
-            other_chunks = fetch_response.vectors
-            prechunk = other_chunks[pre]["metadata"]["content"]
-            postchunk = other_chunks[post]["metadata"]["content"]
-
+            pre = m["metadata"].get("prechunk_id", "")
+            post = m["metadata"].get("postchunk_id", "")
+            
+            prechunk_text = ""
+            postchunk_text = ""
+            
+            # Fetch pre-chunk if it exists and is not empty
+            if pre:
+                try:
+                    pre_fetch = index.fetch(ids=[pre])
+                    if pre in pre_fetch.vectors:
+                        prechunk = pre_fetch.vectors[pre]["metadata"]["content"]
+                        prechunk_text = prechunk[-400:] if prechunk else ""
+                except Exception as e:
+                    print(f"Error fetching pre-chunk: {e}")
+            
+            # Fetch post-chunk if it exists and is not empty
+            if post:
+                try:
+                    post_fetch = index.fetch(ids=[post])
+                    if post in post_fetch.vectors:
+                        postchunk = post_fetch.vectors[post]["metadata"]["content"]
+                        postchunk_text = postchunk[:400] if postchunk else ""
+                except Exception as e:
+                    print(f"Error fetching post-chunk: {e}")
+                
             chunk = f"""# {title}
 
-            {prechunk[-400:]}
+            {prechunk_text}
             {content}
-            {postchunk[:400]}"""
-            
+            {postchunk_text}"""
+       
             chunks.append(chunk)
         return chunks
 
