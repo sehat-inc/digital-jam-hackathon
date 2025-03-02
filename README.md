@@ -1,21 +1,13 @@
 
 <img src="assests/logo.png" alt="Covenant AI Logo" width="150" height="150">
 
-<div align="left">
-   <a href="https://sehat-inc.github.io/covenant-ai/">
-      <img src="https://img.shields.io/badge/Docs-Covenant%20AI%20User%20Guide-blueviolet?style=flat&logo=read-the-docs" alt="Covenant AI User Guide">
-   </a>
-   <a href="https://www.bestpractices.dev/projects/9976">
-      <img src="https://www.bestpractices.dev/projects/9976/badge" alt="Covenant AI Best Practices">
-   </a>
-</div>
 
 ## Covenant AI
 
 Covenant AI is a smart lease contract analysis system that leverages Agentic RAG for information retrieval.
 The RAG architecture is built without the use of external libraries/frameworks for scalability. 
 
-> For a comprehensive overview, please visit [the offical Covenant AI Documentation](https://docs.google.com/document/d/1wF_BIUqBmTT5pCod0L1EdVWjJe7RHlbvKfGV_hV0Fkc/edit?usp=sharing) 
+> For a comprehensive overview, please visit [the offical Covenant AI Documentation](https://docs.google.com/document/d/14oIjGnVI6-oYlPnT6ELIKPSXPhW-0zD7R7DvOV-x4KE/edit?usp=sharing) 
 
 ## Sample Dataset for Hackathon
 
