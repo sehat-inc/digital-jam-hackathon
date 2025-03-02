@@ -9,6 +9,10 @@ The RAG architecture is built without the use of external libraries/frameworks f
 
 > For a comprehensive overview, please visit [the offical Covenant AI Documentation](https://docs.google.com/document/d/14oIjGnVI6-oYlPnT6ELIKPSXPhW-0zD7R7DvOV-x4KE/edit?usp=sharing) 
 
+## Demo Video
+
+[Click here to see the demo](https://youtu.be/zbtpj4iIT1w?si=x40GEF8lhfvtJ8fw)
+
 ## Sample Dataset for Hackathon
 
 The project root has a few sample lease agreements you can use to test the project and its funcationalities.
